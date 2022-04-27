@@ -1,5 +1,5 @@
 /* PrismJS 1.28.0
-https://prismjs.com/download.html?#themes=prism-okaidia&languages=markup+css+clike+javascript+aspnet+bash+batch+c+csharp+cpp+css-extras+diff+docker+git+handlebars+http+java+json+latex+less+makefile+markdown+markup-templating+objectivec+python+jsx+regex+scss+sql+typescript+yaml&plugins=line-numbers+autolinker+show-language+remove-initial-line-feed+previewers+normalize-whitespace+toolbar+copy-to-clipboard */
+https://prismjs.com/download.html?#themes=prism-okaidia&languages=markup+css+clike+javascript+aspnet+bash+batch+c+csharp+cpp+css-extras+diff+docker+git+handlebars+http+java+json+latex+less+makefile+markdown+markup-templating+objectivec+python+jsx+regex+scss+sql+typescript+yaml&plugins=line-numbers+autolinker+show-language+previewers+normalize-whitespace+toolbar+copy-to-clipboard */
 /// <reference lib="WebWorker"/>
 
 var _self = (typeof window !== 'undefined')
@@ -5450,28 +5450,6 @@ Prism.languages.sql = {
     element.textContent = language;
 
     return element;
-  });
-
-}());
-
-(function () {
-
-  if (typeof Prism === 'undefined' || typeof document === 'undefined') {
-    return;
-  }
-
-  Prism.hooks.add('before-sanity-check', function (env) {
-    if (env.code) {
-      var pre = env.element.parentNode;
-      var clsReg = /(?:^|\s)keep-initial-line-feed(?:\s|$)/;
-      if (
-          pre && pre.nodeName.toLowerCase() === 'pre' &&
-          // Apply only if nor the <pre> or the <code> have the class
-          (!clsReg.test(pre.className) && !clsReg.test(env.element.className))
-      ) {
-        env.code = env.code.replace(/^(?:\r?\n|\r)/, '');
-      }
-    }
   });
 
 }());
