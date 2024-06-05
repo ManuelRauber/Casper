@@ -175,5 +175,8 @@
         "extends": [
             "@tryghost:theme"
         ]
+    },
+    "dependencies": {
+        "tocbot": "^4.28.2"
     }
 }
