@@ -46,7 +46,10 @@ function hbs(done) {
 
 function css(done) {
     pump([
-        src('assets/css/*.css', {sourcemaps: true}),
+        src([
+            'assets/css/*.css',
+            'node_modules/tocbot/dist/tocbot.css',
+        ], {sourcemaps: true}),
         postcss([
             easyimport,
             colorFunction(),
@@ -63,7 +66,8 @@ function js(done) {
         src([
             // pull in lib files first so our own code can depend on it
             'assets/js/lib/*.js',
-            'assets/js/*.js'
+            'assets/js/*.js',
+            'node_modules/tocbot/dist/tocbot.js',
         ], {sourcemaps: true}),
         concat('casper.js'),
         uglify(),

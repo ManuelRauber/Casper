@@ -29,6 +29,7 @@ production stylesheet in assets/built/screen.css
 /* Import CSS reset and base styles */
 @import "global.css";
 @import "prism.css";
+@import "tocbot-integration.css";
 
 :root {
 
