@@ -1,5 +1,5 @@
-/* PrismJS 1.28.0
-https://prismjs.com/download.html?#themes=prism-okaidia&languages=markup+css+clike+javascript+aspnet+bash+batch+c+csharp+cpp+css-extras+diff+docker+git+handlebars+http+java+json+latex+less+makefile+markdown+markup-templating+objectivec+python+jsx+regex+scss+sql+typescript+yaml&plugins=line-numbers+autolinker+show-language+previewers+normalize-whitespace+toolbar+copy-to-clipboard */
+/* PrismJS 1.29.0
+https://prismjs.com/download.html?#themes=prism-okaidia&languages=markup+css+clike+javascript+aspnet+bash+batch+c+csharp+cpp+css-extras+diff+docker+git+handlebars+http+java+json+latex+less+makefile+markdown+markup-templating+objectivec+python+jsx+regex+ruby+scss+sql+typescript+yaml&plugins=line-numbers+autolinker+show-language+previewers+normalize-whitespace+toolbar+copy-to-clipboard */
 /// <reference lib="WebWorker"/>
 
 var _self = (typeof window !== 'undefined')
@@ -1317,7 +1317,10 @@ Prism.languages.markup = {
               pattern: /^=/,
               alias: 'attr-equals'
             },
-            /"|'/
+            {
+              pattern: /^(\s*)["']|["']$/,
+              lookbehind: true
+            }
           ]
         }
       },
@@ -2238,7 +2241,7 @@ Prism.languages.insertBefore('aspnet', Prism.languages.javascript ? 'script' : '
     // Highlight variable names as variables in the left-hand part
     // of assignments (“=” and “+=”).
     'assign-left': {
-      pattern: /(^|[\s;|&]|[<>]\()\w+(?=\+?=)/,
+      pattern: /(^|[\s;|&]|[<>]\()\w+(?:\.\w+)*(?=\+?=)/,
       inside: {
         'environment': {
           pattern: RegExp('(^|[\\s;|&]|[<>]\\()' + envVars),
@@ -2246,6 +2249,12 @@ Prism.languages.insertBefore('aspnet', Prism.languages.javascript ? 'script' : '
           alias: 'constant'
         }
       },
+      alias: 'variable',
+      lookbehind: true
+    },
+    // Highlight parameter names as variables
+    'parameter': {
+      pattern: /(^|\s)-{1,2}(?:\w+:[+-]?)?\w+(?:\.\w+)*(?=[=\s]|$)/,
       alias: 'variable',
       lookbehind: true
     },
@@ -2296,7 +2305,7 @@ Prism.languages.insertBefore('aspnet', Prism.languages.javascript ? 'script' : '
     },
     'variable': insideString.variable,
     'function': {
-      pattern: /(^|[\s;|&]|[<>]\()(?:add|apropos|apt|apt-cache|apt-get|aptitude|aspell|automysqlbackup|awk|basename|bash|bc|bconsole|bg|bzip2|cal|cat|cfdisk|chgrp|chkconfig|chmod|chown|chroot|cksum|clear|cmp|column|comm|composer|cp|cron|crontab|csplit|curl|cut|date|dc|dd|ddrescue|debootstrap|df|diff|diff3|dig|dir|dircolors|dirname|dirs|dmesg|docker|docker-compose|du|egrep|eject|env|ethtool|expand|expect|expr|fdformat|fdisk|fg|fgrep|file|find|fmt|fold|format|free|fsck|ftp|fuser|gawk|git|gparted|grep|groupadd|groupdel|groupmod|groups|grub-mkconfig|gzip|halt|head|hg|history|host|hostname|htop|iconv|id|ifconfig|ifdown|ifup|import|install|ip|jobs|join|kill|killall|less|link|ln|locate|logname|logrotate|look|lpc|lpr|lprint|lprintd|lprintq|lprm|ls|lsof|lynx|make|man|mc|mdadm|mkconfig|mkdir|mke2fs|mkfifo|mkfs|mkisofs|mknod|mkswap|mmv|more|most|mount|mtools|mtr|mutt|mv|nano|nc|netstat|nice|nl|node|nohup|notify-send|npm|nslookup|op|open|parted|passwd|paste|pathchk|ping|pkill|pnpm|podman|podman-compose|popd|pr|printcap|printenv|ps|pushd|pv|quota|quotacheck|quotactl|ram|rar|rcp|reboot|remsync|rename|renice|rev|rm|rmdir|rpm|rsync|scp|screen|sdiff|sed|sendmail|seq|service|sftp|sh|shellcheck|shuf|shutdown|sleep|slocate|sort|split|ssh|stat|strace|su|sudo|sum|suspend|swapon|sync|tac|tail|tar|tee|time|timeout|top|touch|tr|traceroute|tsort|tty|umount|uname|unexpand|uniq|units|unrar|unshar|unzip|update-grub|uptime|useradd|userdel|usermod|users|uudecode|uuencode|v|vcpkg|vdir|vi|vim|virsh|vmstat|wait|watch|wc|wget|whereis|which|who|whoami|write|xargs|xdg-open|yarn|yes|zenity|zip|zsh|zypper)(?=$|[)\s;|&])/,
+      pattern: /(^|[\s;|&]|[<>]\()(?:add|apropos|apt|apt-cache|apt-get|aptitude|aspell|automysqlbackup|awk|basename|bash|bc|bconsole|bg|bzip2|cal|cargo|cat|cfdisk|chgrp|chkconfig|chmod|chown|chroot|cksum|clear|cmp|column|comm|composer|cp|cron|crontab|csplit|curl|cut|date|dc|dd|ddrescue|debootstrap|df|diff|diff3|dig|dir|dircolors|dirname|dirs|dmesg|docker|docker-compose|du|egrep|eject|env|ethtool|expand|expect|expr|fdformat|fdisk|fg|fgrep|file|find|fmt|fold|format|free|fsck|ftp|fuser|gawk|git|gparted|grep|groupadd|groupdel|groupmod|groups|grub-mkconfig|gzip|halt|head|hg|history|host|hostname|htop|iconv|id|ifconfig|ifdown|ifup|import|install|ip|java|jobs|join|kill|killall|less|link|ln|locate|logname|logrotate|look|lpc|lpr|lprint|lprintd|lprintq|lprm|ls|lsof|lynx|make|man|mc|mdadm|mkconfig|mkdir|mke2fs|mkfifo|mkfs|mkisofs|mknod|mkswap|mmv|more|most|mount|mtools|mtr|mutt|mv|nano|nc|netstat|nice|nl|node|nohup|notify-send|npm|nslookup|op|open|parted|passwd|paste|pathchk|ping|pkill|pnpm|podman|podman-compose|popd|pr|printcap|printenv|ps|pushd|pv|quota|quotacheck|quotactl|ram|rar|rcp|reboot|remsync|rename|renice|rev|rm|rmdir|rpm|rsync|scp|screen|sdiff|sed|sendmail|seq|service|sftp|sh|shellcheck|shuf|shutdown|sleep|slocate|sort|split|ssh|stat|strace|su|sudo|sum|suspend|swapon|sync|sysctl|tac|tail|tar|tee|time|timeout|top|touch|tr|traceroute|tsort|tty|umount|uname|unexpand|uniq|units|unrar|unshar|unzip|update-grub|uptime|useradd|userdel|usermod|users|uudecode|uuencode|v|vcpkg|vdir|vi|vim|virsh|vmstat|wait|watch|wc|wget|whereis|which|who|whoami|write|xargs|xdg-open|yarn|yes|zenity|zip|zsh|zypper)(?=$|[)\s;|&])/,
       lookbehind: true
     },
     'keyword': {
@@ -2343,6 +2352,7 @@ Prism.languages.insertBefore('aspnet', Prism.languages.javascript ? 'script' : '
     'function-name',
     'for-or-select',
     'assign-left',
+    'parameter',
     'string',
     'environment',
     'function',
@@ -2359,6 +2369,7 @@ Prism.languages.insertBefore('aspnet', Prism.languages.javascript ? 'script' : '
     inside[toBeCopied[i]] = Prism.languages.bash[toBeCopied[i]];
   }
 
+  Prism.languages.sh = Prism.languages.bash;
   Prism.languages.shell = Prism.languages.bash;
 }(Prism));
 
@@ -2743,7 +2754,7 @@ delete Prism.languages.c['boolean'];
     },
     'color': [
       {
-        pattern: /(^|[^\w-])(?:AliceBlue|AntiqueWhite|Aqua|Aquamarine|Azure|Beige|Bisque|Black|BlanchedAlmond|Blue|BlueViolet|Brown|BurlyWood|CadetBlue|Chartreuse|Chocolate|Coral|CornflowerBlue|Cornsilk|Crimson|Cyan|DarkBlue|DarkCyan|DarkGoldenRod|DarkGr[ae]y|DarkGreen|DarkKhaki|DarkMagenta|DarkOliveGreen|DarkOrange|DarkOrchid|DarkRed|DarkSalmon|DarkSeaGreen|DarkSlateBlue|DarkSlateGr[ae]y|DarkTurquoise|DarkViolet|DeepPink|DeepSkyBlue|DimGr[ae]y|DodgerBlue|FireBrick|FloralWhite|ForestGreen|Fuchsia|Gainsboro|GhostWhite|Gold|GoldenRod|Gr[ae]y|Green|GreenYellow|HoneyDew|HotPink|IndianRed|Indigo|Ivory|Khaki|Lavender|LavenderBlush|LawnGreen|LemonChiffon|LightBlue|LightCoral|LightCyan|LightGoldenRodYellow|LightGr[ae]y|LightGreen|LightPink|LightSalmon|LightSeaGreen|LightSkyBlue|LightSlateGr[ae]y|LightSteelBlue|LightYellow|Lime|LimeGreen|Linen|Magenta|Maroon|MediumAquaMarine|MediumBlue|MediumOrchid|MediumPurple|MediumSeaGreen|MediumSlateBlue|MediumSpringGreen|MediumTurquoise|MediumVioletRed|MidnightBlue|MintCream|MistyRose|Moccasin|NavajoWhite|Navy|OldLace|Olive|OliveDrab|Orange|OrangeRed|Orchid|PaleGoldenRod|PaleGreen|PaleTurquoise|PaleVioletRed|PapayaWhip|PeachPuff|Peru|Pink|Plum|PowderBlue|Purple|Red|RosyBrown|RoyalBlue|SaddleBrown|Salmon|SandyBrown|SeaGreen|SeaShell|Sienna|Silver|SkyBlue|SlateBlue|SlateGr[ae]y|Snow|SpringGreen|SteelBlue|Tan|Teal|Thistle|Tomato|Transparent|Turquoise|Violet|Wheat|White|WhiteSmoke|Yellow|YellowGreen)(?![\w-])/i,
+        pattern: /(^|[^\w-])(?:AliceBlue|AntiqueWhite|Aqua|Aquamarine|Azure|Beige|Bisque|Black|BlanchedAlmond|Blue|BlueViolet|Brown|BurlyWood|CadetBlue|Chartreuse|Chocolate|Coral|CornflowerBlue|Cornsilk|Crimson|Cyan|DarkBlue|DarkCyan|DarkGoldenRod|DarkGr[ae]y|DarkGreen|DarkKhaki|DarkMagenta|DarkOliveGreen|DarkOrange|DarkOrchid|DarkRed|DarkSalmon|DarkSeaGreen|DarkSlateBlue|DarkSlateGr[ae]y|DarkTurquoise|DarkViolet|DeepPink|DeepSkyBlue|DimGr[ae]y|DodgerBlue|FireBrick|FloralWhite|ForestGreen|Fuchsia|Gainsboro|GhostWhite|Gold|GoldenRod|Gr[ae]y|Green|GreenYellow|HoneyDew|HotPink|IndianRed|Indigo|Ivory|Khaki|Lavender|LavenderBlush|LawnGreen|LemonChiffon|LightBlue|LightCoral|LightCyan|LightGoldenRodYellow|LightGr[ae]y|LightGreen|LightPink|LightSalmon|LightSeaGreen|LightSkyBlue|LightSlateGr[ae]y|LightSteelBlue|LightYellow|Lime|LimeGreen|Linen|Magenta|Maroon|MediumAquaMarine|MediumBlue|MediumOrchid|MediumPurple|MediumSeaGreen|MediumSlateBlue|MediumSpringGreen|MediumTurquoise|MediumVioletRed|MidnightBlue|MintCream|MistyRose|Moccasin|NavajoWhite|Navy|OldLace|Olive|OliveDrab|Orange|OrangeRed|Orchid|PaleGoldenRod|PaleGreen|PaleTurquoise|PaleVioletRed|PapayaWhip|PeachPuff|Peru|Pink|Plum|PowderBlue|Purple|RebeccaPurple|Red|RosyBrown|RoyalBlue|SaddleBrown|Salmon|SandyBrown|SeaGreen|SeaShell|Sienna|Silver|SkyBlue|SlateBlue|SlateGr[ae]y|Snow|SpringGreen|SteelBlue|Tan|Teal|Thistle|Tomato|Transparent|Turquoise|Violet|Wheat|White|WhiteSmoke|Yellow|YellowGreen)(?![\w-])/i,
         lookbehind: true
       },
       {
@@ -3372,7 +3383,8 @@ Prism.languages.git = {
     'operator': {
       pattern: /(^|[^.])(?:<<=?|>>>?=?|->|--|\+\+|&&|\|\||::|[?:~]|[-+*/%&|^!=<>]=?)/m,
       lookbehind: true
-    }
+    },
+    'constant': /\b[A-Z][A-Z_\d]+\b/
   });
 
   Prism.languages.insertBefore('java', 'string', {
@@ -4368,6 +4380,196 @@ Prism.languages.py = Prism.languages.python;
 
 }(Prism));
 
+/**
+ * Original by Samuel Flores
+ *
+ * Adds the following new token classes:
+ *     constant, builtin, variable, symbol, regex
+ */
+(function (Prism) {
+  Prism.languages.ruby = Prism.languages.extend('clike', {
+    'comment': {
+      pattern: /#.*|^=begin\s[\s\S]*?^=end/m,
+      greedy: true
+    },
+    'class-name': {
+      pattern: /(\b(?:class|module)\s+|\bcatch\s+\()[\w.\\]+|\b[A-Z_]\w*(?=\s*\.\s*new\b)/,
+      lookbehind: true,
+      inside: {
+        'punctuation': /[.\\]/
+      }
+    },
+    'keyword': /\b(?:BEGIN|END|alias|and|begin|break|case|class|def|define_method|defined|do|each|else|elsif|end|ensure|extend|for|if|in|include|module|new|next|nil|not|or|prepend|private|protected|public|raise|redo|require|rescue|retry|return|self|super|then|throw|undef|unless|until|when|while|yield)\b/,
+    'operator': /\.{2,3}|&\.|===|<?=>|[!=]?~|(?:&&|\|\||<<|>>|\*\*|[+\-*/%<>!^&|=])=?|[?:]/,
+    'punctuation': /[(){}[\].,;]/,
+  });
+
+  Prism.languages.insertBefore('ruby', 'operator', {
+    'double-colon': {
+      pattern: /::/,
+      alias: 'punctuation'
+    },
+  });
+
+  var interpolation = {
+    pattern: /((?:^|[^\\])(?:\\{2})*)#\{(?:[^{}]|\{[^{}]*\})*\}/,
+    lookbehind: true,
+    inside: {
+      'content': {
+        pattern: /^(#\{)[\s\S]+(?=\}$)/,
+        lookbehind: true,
+        inside: Prism.languages.ruby
+      },
+      'delimiter': {
+        pattern: /^#\{|\}$/,
+        alias: 'punctuation'
+      }
+    }
+  };
+
+  delete Prism.languages.ruby.function;
+
+  var percentExpression = '(?:' + [
+    /([^a-zA-Z0-9\s{(\[<=])(?:(?!\1)[^\\]|\\[\s\S])*\1/.source,
+    /\((?:[^()\\]|\\[\s\S]|\((?:[^()\\]|\\[\s\S])*\))*\)/.source,
+    /\{(?:[^{}\\]|\\[\s\S]|\{(?:[^{}\\]|\\[\s\S])*\})*\}/.source,
+    /\[(?:[^\[\]\\]|\\[\s\S]|\[(?:[^\[\]\\]|\\[\s\S])*\])*\]/.source,
+    /<(?:[^<>\\]|\\[\s\S]|<(?:[^<>\\]|\\[\s\S])*>)*>/.source
+  ].join('|') + ')';
+
+  var symbolName = /(?:"(?:\\.|[^"\\\r\n])*"|(?:\b[a-zA-Z_]\w*|[^\s\0-\x7F]+)[?!]?|\$.)/.source;
+
+  Prism.languages.insertBefore('ruby', 'keyword', {
+    'regex-literal': [
+      {
+        pattern: RegExp(/%r/.source + percentExpression + /[egimnosux]{0,6}/.source),
+        greedy: true,
+        inside: {
+          'interpolation': interpolation,
+          'regex': /[\s\S]+/
+        }
+      },
+      {
+        pattern: /(^|[^/])\/(?!\/)(?:\[[^\r\n\]]+\]|\\.|[^[/\\\r\n])+\/[egimnosux]{0,6}(?=\s*(?:$|[\r\n,.;})#]))/,
+        lookbehind: true,
+        greedy: true,
+        inside: {
+          'interpolation': interpolation,
+          'regex': /[\s\S]+/
+        }
+      }
+    ],
+    'variable': /[@$]+[a-zA-Z_]\w*(?:[?!]|\b)/,
+    'symbol': [
+      {
+        pattern: RegExp(/(^|[^:]):/.source + symbolName),
+        lookbehind: true,
+        greedy: true
+      },
+      {
+        pattern: RegExp(/([\r\n{(,][ \t]*)/.source + symbolName + /(?=:(?!:))/.source),
+        lookbehind: true,
+        greedy: true
+      },
+    ],
+    'method-definition': {
+      pattern: /(\bdef\s+)\w+(?:\s*\.\s*\w+)?/,
+      lookbehind: true,
+      inside: {
+        'function': /\b\w+$/,
+        'keyword': /^self\b/,
+        'class-name': /^\w+/,
+        'punctuation': /\./
+      }
+    }
+  });
+
+  Prism.languages.insertBefore('ruby', 'string', {
+    'string-literal': [
+      {
+        pattern: RegExp(/%[qQiIwWs]?/.source + percentExpression),
+        greedy: true,
+        inside: {
+          'interpolation': interpolation,
+          'string': /[\s\S]+/
+        }
+      },
+      {
+        pattern: /("|')(?:#\{[^}]+\}|#(?!\{)|\\(?:\r\n|[\s\S])|(?!\1)[^\\#\r\n])*\1/,
+        greedy: true,
+        inside: {
+          'interpolation': interpolation,
+          'string': /[\s\S]+/
+        }
+      },
+      {
+        pattern: /<<[-~]?([a-z_]\w*)[\r\n](?:.*[\r\n])*?[\t ]*\1/i,
+        alias: 'heredoc-string',
+        greedy: true,
+        inside: {
+          'delimiter': {
+            pattern: /^<<[-~]?[a-z_]\w*|\b[a-z_]\w*$/i,
+            inside: {
+              'symbol': /\b\w+/,
+              'punctuation': /^<<[-~]?/
+            }
+          },
+          'interpolation': interpolation,
+          'string': /[\s\S]+/
+        }
+      },
+      {
+        pattern: /<<[-~]?'([a-z_]\w*)'[\r\n](?:.*[\r\n])*?[\t ]*\1/i,
+        alias: 'heredoc-string',
+        greedy: true,
+        inside: {
+          'delimiter': {
+            pattern: /^<<[-~]?'[a-z_]\w*'|\b[a-z_]\w*$/i,
+            inside: {
+              'symbol': /\b\w+/,
+              'punctuation': /^<<[-~]?'|'$/,
+            }
+          },
+          'string': /[\s\S]+/
+        }
+      }
+    ],
+    'command-literal': [
+      {
+        pattern: RegExp(/%x/.source + percentExpression),
+        greedy: true,
+        inside: {
+          'interpolation': interpolation,
+          'command': {
+            pattern: /[\s\S]+/,
+            alias: 'string'
+          }
+        }
+      },
+      {
+        pattern: /`(?:#\{[^}]+\}|#(?!\{)|\\(?:\r\n|[\s\S])|[^\\`#\r\n])*`/,
+        greedy: true,
+        inside: {
+          'interpolation': interpolation,
+          'command': {
+            pattern: /[\s\S]+/,
+            alias: 'string'
+          }
+        }
+      }
+    ]
+  });
+
+  delete Prism.languages.ruby.string;
+
+  Prism.languages.insertBefore('ruby', 'number', {
+    'builtin': /\b(?:Array|Bignum|Binding|Class|Continuation|Dir|Exception|FalseClass|File|Fixnum|Float|Hash|IO|Integer|MatchData|Method|Module|NilClass|Numeric|Object|Proc|Range|Regexp|Stat|String|Struct|Symbol|TMS|Thread|ThreadGroup|Time|TrueClass)\b/,
+    'constant': /\b[A-Z][A-Z0-9_]*(?:[?!]|\b)/
+  });
+
+  Prism.languages.rb = Prism.languages.ruby;
+}(Prism));
+
 Prism.languages.scss = Prism.languages.extend('css', {
   'comment': {
     pattern: /(^|[^\\])(?:\/\*[\s\S]*?\*\/|\/\/.*)/,
@@ -5194,10 +5396,13 @@ Prism.languages.sql = {
     "avdl": "Avro IDL",
     "awk": "AWK",
     "gawk": "GAWK",
+    "sh": "Shell",
     "basic": "BASIC",
     "bbcode": "BBcode",
+    "bbj": "BBj",
     "bnf": "BNF",
     "rbnf": "RBNF",
+    "bqn": "BQN",
     "bsl": "BSL (1C:Enterprise)",
     "oscript": "OneScript",
     "csharp": "C#",
@@ -5207,6 +5412,11 @@ Prism.languages.sql = {
     "cfscript": "CFScript",
     "cfc": "CFScript",
     "cil": "CIL",
+    "cilkc": "Cilk/C",
+    "cilk-c": "Cilk/C",
+    "cilkcpp": "Cilk/C++",
+    "cilk-cpp": "Cilk/C++",
+    "cilk": "Cilk/C++",
     "cmake": "CMake",
     "cobol": "COBOL",
     "coffee": "CoffeeScript",
@@ -5300,6 +5510,7 @@ Prism.languages.sql = {
     "matlab": "MATLAB",
     "maxscript": "MAXScript",
     "mel": "MEL",
+    "metafont": "METAFONT",
     "mongodb": "MongoDB",
     "moon": "MoonScript",
     "n1ql": "N1QL",
@@ -5360,7 +5571,7 @@ Prism.languages.sql = {
     "rb": "Ruby",
     "sas": "SAS",
     "sass": "Sass (Sass)",
-    "scss": "Sass (Scss)",
+    "scss": "Sass (SCSS)",
     "shell-session": "Shell session",
     "sh-session": "Shell session",
     "shellsession": "Shell session",
@@ -5407,6 +5618,7 @@ Prism.languages.sql = {
     "wasm": "WebAssembly",
     "web-idl": "Web IDL",
     "webidl": "Web IDL",
+    "wgsl": "WGSL",
     "wiki": "Wiki markup",
     "wolfram": "Wolfram language",
     "nb": "Mathematica Notebook",
@@ -6202,6 +6414,18 @@ Prism.languages.sql = {
     return str.length + res;
   }
 
+  var settingsConfig = {
+    'remove-trailing': 'boolean',
+    'remove-indent': 'boolean',
+    'left-trim': 'boolean',
+    'right-trim': 'boolean',
+    'break-lines': 'number',
+    'indent': 'number',
+    'remove-initial-line-feed': 'boolean',
+    'tabs-to-spaces': 'number',
+    'spaces-to-tabs': 'number',
+  };
+
   NormalizeWhitespace.prototype = {
     setDefaults: function (defaults) {
       this.defaults = assign(this.defaults, defaults);
@@ -6328,6 +6552,25 @@ Prism.languages.sql = {
     var pre = env.element.parentNode;
     if (!env.code || !pre || pre.nodeName.toLowerCase() !== 'pre') {
       return;
+    }
+
+    if (env.settings == null) { env.settings = {}; }
+
+    // Read settings from 'data-' attributes
+    for (var key in settingsConfig) {
+      if (Object.hasOwnProperty.call(settingsConfig, key)) {
+        var settingType = settingsConfig[key];
+        if (pre.hasAttribute('data-' + key)) {
+          try {
+            var value = JSON.parse(pre.getAttribute('data-' + key) || 'true');
+            if (typeof value === settingType) {
+              env.settings[key] = value;
+            }
+          } catch (_error) {
+            // ignore error
+          }
+        }
+      }
     }
 
     var children = pre.childNodes;
